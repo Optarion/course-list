@@ -133,10 +133,10 @@ class ListItem extends React.Component {
           </View>
         </TouchableOpacity>
         <View style={listItemStyles.buttons}>
-          <TouchableOpacity onPress={() => {onChangeQuantity(id, 'increment')}} >
+          <TouchableOpacity style={{...listItemStyles.touchableButton, marginLeft: 0}} onPress={() => {onChangeQuantity(id, 'increment')}} >
             <Text style={listItemStyles.button}>+</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {onChangeQuantity(id, 'decrement')}} >
+          <TouchableOpacity style={{...listItemStyles.touchableButton, marginLeft: 5}} onPress={() => {onChangeQuantity(id, 'decrement')}} >
             <Text style={listItemStyles.button}>-</Text>
           </TouchableOpacity>
         </View>
