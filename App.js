@@ -63,6 +63,8 @@ export default class App extends React.PureComponent {
 
   keyExtractor = (item, index) => item.id;
 
+  onResetList = () => this.setState({items: new Map(), boughtItems: new Map()});
+
   render() {
     return (
       <View style={appStyles.container}>
@@ -80,6 +82,9 @@ export default class App extends React.PureComponent {
           keyExtractor={this.keyExtractor}
           renderItem={this.renderListItem}
         />
+        <ResetButton 
+          onResetList={this.onResetList}
+          />
       </View>
     );
   }
@@ -163,10 +168,50 @@ const listItemStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  touchableButton: {
+    borderRadius: 20,
+    backgroundColor: '#FEFEFE',
+  },
   button: {
     fontSize: 24,
     color: 'blue',
     paddingLeft: 10,
     paddingRight: 10
-  }
+  },
 });
+
+class ResetButton extends React.PureComponent {
+  static propTypes = {
+    onResetList: PropTypes.func
+  }
+
+  render() {
+    return (
+      <View>
+        <TouchableOpacity 
+          style={resetButtonStyles.container}
+          onPress={this.props.onResetList}>
+          <Text style={resetButtonStyles.label}>New List</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+}
+
+const resetButtonStyles = StyleSheet.create({
+  container: {
+    padding: 10,
+    margin: 10,
+    marginLeft: 100,
+    marginRight: 100,
+    borderColor: '#F5F5F5',
+    borderWidth: 2,
+    borderRadius: 10,
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  label: {
+    textAlign: 'center',
+    textTransform: 'uppercase'
+  }
+})
