@@ -10,6 +10,9 @@ import {
   TouchableOpacity,
   Button } from 'react-native';
 
+import ListItem from './components/listItem';
+import ResetButton from './components/resetButton';
+
 export default class App extends React.PureComponent {
   state = {
     inputValue: '',
@@ -110,108 +113,3 @@ const inputStyles = StyleSheet.create({
     margin: 10
   },
 });
-
-
-class ListItem extends React.Component {
-  static propTypes = {
-    id: PropTypes.string,
-    title: PropTypes.string,
-    quantity: PropTypes.number,
-    isBought: PropTypes.bool,
-    onPressItem: PropTypes.func,
-    onChangeQuantity: PropTypes.func,
-  }
-
-  render() {
-    const {id, title, quantity, isBought, onPressItem, onChangeQuantity} = this.props;
-    const color = isBought ? 'lightgrey' : 'black';
-    const textDecorationLine = isBought ? 'line-through' : 'none';
-    const hasMoreQuantity = quantity && quantity > 1;
-    return (
-      <View style={listItemStyles.container}>
-        <TouchableOpacity onPress={() => {onPressItem(id)}}>
-          <View style={listItemStyles.label}>
-            <Text style={{textDecorationLine, color}}>{title}</Text>
-            {hasMoreQuantity && (
-              <Text style={{fontSize:10, textDecorationLine, color}}>{`x${quantity}`}</Text>
-            )}
-          </View>
-        </TouchableOpacity>
-        <View style={listItemStyles.buttons}>
-          <TouchableOpacity style={{...listItemStyles.touchableButton, marginLeft: 0}} onPress={() => {onChangeQuantity(id, 'increment')}} >
-            <Text style={listItemStyles.button}>+</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{...listItemStyles.touchableButton, marginLeft: 5}} onPress={() => {onChangeQuantity(id, 'decrement')}} >
-            <Text style={listItemStyles.button}>-</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
-  }
-}
-
-const listItemStyles = StyleSheet.create({
-  container: {
-    padding: 10,
-    backgroundColor: '#F5F5F5',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    maxWidth: '100%'
-  },
-  label: {
-    // Manage ellipsed title
-  },
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  touchableButton: {
-    borderRadius: 20,
-    backgroundColor: '#FEFEFE',
-  },
-  button: {
-    fontSize: 24,
-    color: 'blue',
-    paddingLeft: 10,
-    paddingRight: 10
-  },
-});
-
-class ResetButton extends React.PureComponent {
-  static propTypes = {
-    onResetList: PropTypes.func
-  }
-
-  render() {
-    return (
-      <View>
-        <TouchableOpacity 
-          style={resetButtonStyles.container}
-          onPress={this.props.onResetList}>
-          <Text style={resetButtonStyles.label}>New List</Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-}
-
-const resetButtonStyles = StyleSheet.create({
-  container: {
-    padding: 10,
-    margin: 10,
-    marginLeft: 100,
-    marginRight: 100,
-    borderColor: '#F5F5F5',
-    borderWidth: 2,
-    borderRadius: 10,
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  label: {
-    textAlign: 'center',
-    textTransform: 'uppercase'
-  }
-})
